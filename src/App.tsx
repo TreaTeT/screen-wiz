@@ -13,6 +13,10 @@ function App() {
     height = 64,
   } = useResizeObserver<HTMLImageElement>(); // observer na sledovanie zmensovania jednotlivych casti gridu aby som podla toho mohol nastavit velkost osoby vedla gridu
   const [gridWidth, setGridWidth] = React.useState<number>(5);
+  const [gridWidthInputValue, setGridWidthInputValue] =
+    React.useState<string>("5");
+  const [gridHeightInputValue, setGridHeightInputValue] =
+    React.useState<string>("4");
   const [gridHeight, setGridHeight] = React.useState<number>(4);
   const [grid, setGrid] = React.useState<ReactNode[]>([]); // samotny grid reprezentovany ako pole divov v ktorom kazdy div obsahuje pole cabinetov
   const [specs, setSpecs] = React.useState<ISpecs>(); //  state pre udaje o obrazovke
@@ -20,7 +24,7 @@ function App() {
   React.useEffect(() => {
     generateGrid(gridWidth, gridHeight);
     calculateSpecs(gridWidth, gridHeight, {
-      CW_mm: 60,
+      CW_mm: 600,
       CH_mm: 337.5,
       CHR: 384,
       CVR: 216,
@@ -100,6 +104,9 @@ function App() {
       gridHeight > 0 &&
       gridHeight <= 300
     ) {
+      console.log(
+        `called handle Grid Change with width: ${gridWidth}} adn height: ${gridHeight}`
+      );
       generateGrid(gridWidth, gridHeight);
       calculateSpecs(gridWidth, gridHeight, {
         CW_mm: 60,
@@ -116,22 +123,30 @@ function App() {
         <input
           type="number"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setGridWidth(parseInt(e.target.value));
+            setGridWidthInputValue(e.target.value);
+            if (e.target.value) {
+              setGridWidth(parseInt(e.target.value));
+            }
           }}
-          onBlur={handleGridChange}
+          // onBlur={handleGridChange}
+          onKeyUp={handleGridChange}
           onClick={handleGridChange}
-          value={gridWidth}
+          value={gridWidthInputValue}
           min={1}
           max={300}
         />
         <input
           type="number"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setGridHeight(parseInt(e.target.value));
+            setGridHeightInputValue(e.target.value);
+            if (e.target.value) {
+              setGridHeight(parseInt(e.target.value));
+            }
           }}
-          onBlur={handleGridChange}
+          // onBlur={handleGridChange}
+          onKeyUp={handleGridChange}
           onClick={handleGridChange}
-          value={gridHeight}
+          value={gridHeightInputValue}
           min={1}
           max={300}
         />
@@ -139,6 +154,7 @@ function App() {
 
       <div className="gridContainer">
         <div className="grid">
+          {console.log(height)}
           <img
             id="gridGirl"
             src={gridGirlImage}
