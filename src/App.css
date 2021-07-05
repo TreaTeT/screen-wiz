@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+:root {
+  --double-xl-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --xl-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+thead td {
+  text-align: left;
+  background-color: #362f4b;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 1rem;
+  color: white;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+td {
+  padding: 0.8rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+table {
+  font-family: "Open Sans", sans-serif;
+  width: 35%;
+  border-collapse: collapse;
+  margin: 5rem auto;
+  box-shadow: var(--double-xl-shadow);
+}
+
+table tr {
+  border-bottom: 1px solid rgba(54, 47, 75, 0.2);
+}
+
+tr:nth-child(even) {
+  background-color: #fbfbfb;
+}
+
+input[type="number"] {
+  padding: 0.2rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+.inputContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 10rem;
+  margin: 0 auto;
+}
+
+.grid {
+  display: inline-flex;
+  align-items: flex-end;
+  margin: 0 auto;
+}
+
+.gridContainer {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media screen and (max-width: 1060px) {
+  table {
+    width: 80%;
   }
 }
