@@ -17,7 +17,7 @@ const GridCell = (props: IProps) => {
       style={{
         maxWidth: "100%",
         width: "120px",
-        maxHeight: "64px",
+        maxHeight: "68px",
         height: "auto",
       }}
     />

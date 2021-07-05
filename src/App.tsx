@@ -145,8 +145,8 @@ function App() {
             alt="grid girl"
             style={{
               width: "auto",
-              maxHeight: "334px",
-              height: `${Math.round(height) * 4.9}px`,
+              maxHeight: "350px",
+              height: `${Math.round(height) * 5.15}px`,
             }}
           />
           {grid.map((item) => item)}
