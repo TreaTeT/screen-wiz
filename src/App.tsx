@@ -5,6 +5,7 @@ import gridGirlImage from "./assets/img/gridgirl.png";
 import "./App.css";
 import { ISpecs } from "./types";
 import useResizeObserver from "use-resize-observer";
+import UpDownInput from "./components/UpDownInput";
 
 function App() {
   const {
@@ -17,6 +18,8 @@ function App() {
     React.useState<string>("5");
   const [gridHeightInputValue, setGridHeightInputValue] =
     React.useState<string>("4");
+  // const [gridWidthRangeValue, setWidthRangeValue] = React.useState<number>(5);
+  // const [gridHeightRangeValue, setHeightRangeValue] = React.useState<number>(4);
   const [gridHeight, setGridHeight] = React.useState<number>(4);
   const [grid, setGrid] = React.useState<ReactNode[]>([]); // samotny grid reprezentovany ako pole divov v ktorom kazdy div obsahuje pole cabinetov
   const [specs, setSpecs] = React.useState<ISpecs>(); //  state pre udaje o obrazovke
@@ -97,18 +100,21 @@ function App() {
     setGrid(tempGrid);
   };
 
-  const handleGridChange = () => {
-    if (
-      gridWidth > 0 &&
-      gridWidth <= 300 &&
-      gridHeight > 0 &&
-      gridHeight <= 300
-    ) {
+  const handleGridChange = (width: number | null, height: number | null) => {
+    if (width === null) {
+      width = gridWidth;
+    }
+
+    if (height === null) {
+      height = gridHeight;
+    }
+
+    if (width > 0 && width <= 300 && height > 0 && height <= 300) {
       console.log(
-        `called handle Grid Change with width: ${gridWidth}} adn height: ${gridHeight}`
+        `called handle Grid Change with width: ${width}} adn height: ${height}`
       );
-      generateGrid(gridWidth, gridHeight);
-      calculateSpecs(gridWidth, gridHeight, {
+      generateGrid(width, height);
+      calculateSpecs(width, height, {
         CW_mm: 60,
         CH_mm: 337.5,
         CHR: 384,
@@ -129,8 +135,8 @@ function App() {
             }
           }}
           // onBlur={handleGridChange}
-          onKeyUp={handleGridChange}
-          onClick={handleGridChange}
+          onKeyUp={() => handleGridChange(gridWidth, gridHeight)}
+          onClick={() => handleGridChange(gridWidth, gridHeight)}
           value={gridWidthInputValue}
           min={1}
           max={300}
@@ -144,17 +150,46 @@ function App() {
             }
           }}
           // onBlur={handleGridChange}
-          onKeyUp={handleGridChange}
-          onClick={handleGridChange}
+          onKeyUp={() => handleGridChange(gridWidth, gridHeight)}
+          onClick={() => handleGridChange(gridWidth, gridHeight)}
           value={gridHeightInputValue}
           min={1}
           max={300}
+        />
+        <input
+          type="range"
+          min="1"
+          max="300"
+          onChange={(e) => {
+            setGridWidthInputValue(e.target.value);
+            setGridWidth(parseInt(e.target.value));
+          }}
+          onMouseUp={() => handleGridChange(gridWidth, gridHeight)}
+          value={gridWidth}
+        />
+        <p>{gridWidthInputValue}</p>
+        <input
+          type="range"
+          min="1"
+          max="300"
+          onChange={(e) => {
+            setGridHeightInputValue(e.target.value);
+            setGridHeight(parseInt(e.target.value));
+          }}
+          value={gridHeight}
+        />
+        <p>{gridHeightInputValue}</p>
+        <UpDownInput
+          gridUpdate={handleGridChange}
+          widthValue={gridWidth}
+          setWidthValue={setGridWidth}
+          heightValue={gridHeight}
+          setHeightValue={setGridHeight}
         />
       </div>
 
       <div className="gridContainer">
         <div className="grid">
-          {console.log(height)}
           <img
             id="gridGirl"
             src={gridGirlImage}
